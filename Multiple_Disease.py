@@ -35,7 +35,7 @@ if (selected == 'Kidney Prediction'):
   
     # page title
     st.title('Kidney Prediction')
-    st.subheader('Prediction accuracy is expected to be 94%')
+    st.subheader('Prediction accuracy is expected to be 96%')
     page_element="""
     <style>
     [data-testid="stAppViewContainer"]{
@@ -58,30 +58,29 @@ if (selected == 'Kidney Prediction'):
     with col3:
         specific_gravity = st.text_input('Specific Gravity value',value='1')
     with col1:
-        albumin = st.text_input('Albumin value',value='0')
-    with col2:
         sugar = st.text_input('Sugar value',value='0')
-    with col3:
+    with col2:
         red_blood_cells = st.selectbox('Red Blood Cells', ('normal', 'abnormal'))
-    with col1:
+    with col3:
         pus_cell = st.selectbox('Pus Cell', ('normal', 'abnormal'))
-    with col2:
-        pus_cell_clumps = st.selectbox('Pus Cell Clumps', ('notpresent', 'present'))
-    with col3:
-        bacteria = st.selectbox('Bacteria', ('notpresent', 'present'))
     with col1:
-        sodium = st.text_input('Sodium value',value='0')
+        bacteria = st.selectbox('Bacteria', ('notpresent', 'present'))
     with col2:
-        potassium = st.text_input('Potassium value',value='0')
+        sodium = st.text_input('Sodium value',value='0')
     with col3:
+        potassium = st.text_input('Potassium value',value='0')
+    with col1:
         haemoglobin = st.text_input('Haemoglobin value',value='0')
+    with col2:
+        packedVol = st.text_input('Packed cell volume',value='0')
+    with col3:
+        RBCcount = st.text_input('RBC Count',value='0')
     
 
     #convert categorical inputs to numerical values
     #red_blood_cell,Pus cell, pus cell count,bacteria, Hypertension, Diabetes Mellitus, Coronary Artery Disease, Appetite, Pedal Edema, Anemia
     red_blood_cells = 1 if red_blood_cells.lower() == 'normal' else 0
     pus_cell = 1 if pus_cell.lower() == 'normal' else 0
-    pus_cell_clumps = 1 if pus_cell_clumps.lower() == 'notpresent' else 0
     bacteria = 1 if bacteria.lower() == 'notpresent' else 0      
 
     # convert other inputs to float
@@ -90,11 +89,12 @@ if (selected == 'Kidney Prediction'):
     age = float(age)
     blood_pressure = float(blood_pressure)
     specific_gravity = float(specific_gravity)
-    albumin = float(albumin)
     sugar = float(sugar)
     sodium = float(sodium)
     potassium = float(potassium)
     haemoglobin = float(haemoglobin)
+    packedVol = float(packedVol)
+    RBCcount = float(RBCcount)
 
 
 
@@ -103,14 +103,18 @@ if (selected == 'Kidney Prediction'):
 
     # creating a button for Prediction
     if st.button('Kidney Test Result'):
-        kidney_prediction = model_kidney.predict([[age, blood_pressure, specific_gravity, albumin, sugar, red_blood_cells, pus_cell, pus_cell_clumps, bacteria, sodium, potassium, haemoglobin]])
+        kidney_prediction = model_kidney.predict([[age, blood_pressure, specific_gravity, sugar, red_blood_cells, pus_cell,bacteria, sodium, potassium, haemoglobin, packedVol, RBCcount]])
     
-        if (kidney_prediction[0] == 1):
+        if (kidney_prediction[0] == 0):
             kidney_diagnosis = 'The person is having kidney disease'
+            st.markdown(f'<p style="background-color:#0066cc;color:#db2742;font-size:24px;border-radius:2%;">{kidney_diagnosis}</p>', unsafe_allow_html=True)
         else:
             kidney_diagnosis = 'The person does not have any kidney disease'
+            
+            st.markdown(f'<p style="background-color:#0066cc;color:#33ff33;font-size:24px;border-radius:2%;">{kidney_diagnosis}</p>', unsafe_allow_html=True)
+
     
-    st.success(kidney_diagnosis)
+    
 
 
 
@@ -120,7 +124,7 @@ if (selected == 'Liver Disease Prediction'):
 
     # page title
     st.title('Liver Disease Prediction')
-    st.subheader('Prediction accuracy is expected to be 80%')
+    st.subheader('Prediction accuracy is expected to be 99%')
     page_element="""
     <style>
     [data-testid="stAppViewContainer"]{
@@ -170,10 +174,12 @@ if (selected == 'Liver Disease Prediction'):
         
         if (liver_diagnosis[0] == 1):
           liver_diagnosis = 'The person is having liver disease'
+          st.markdown(f'<p style="background-color:#0066cc;color:#db2742;font-size:24px;border-radius:2%;">{liver_diagnosis}</p>', unsafe_allow_html=True)
         else:
           liver_diagnosis = 'The person does not have any liver disease'
+          st.markdown(f'<p style="background-color:#0066cc;color:#33ff33;font-size:24px;border-radius:2%;">{liver_diagnosis}</p>', unsafe_allow_html=True)
         
-    st.success(liver_diagnosis)
+    
         
     
     
@@ -183,7 +189,7 @@ if (selected == "Parkinsons Prediction"):
     
     # page title
     st.title("Parkinson's Disease Prediction")
-    st.subheader('Prediction accuracy is expected to be 90%')
+    st.subheader('Prediction accuracy is expected to be 95%')
     page_element="""
     <style>
     [data-testid="stAppViewContainer"]{
@@ -195,73 +201,43 @@ if (selected == "Parkinsons Prediction"):
 
     st.markdown(page_element, unsafe_allow_html=True)
     
-    col1, col2, col3, col4, col5 = st.columns(5)  
+    col1, col2, col3, col4 = st.columns(4)  
     
     with col1:
-        fo = st.text_input('MDVP:Fo(Hz)')
-        
-    with col2:
-        fhi = st.text_input('MDVP:Fhi(Hz)')
-        
-    with col3:
-        flo = st.text_input('MDVP:Flo(Hz)')
-        
-    with col4:
         Jitter_percent = st.text_input('MDVP:Jitter(%)')
         
-    with col5:
+    with col2:
         Jitter_Abs = st.text_input('MDVP:Jitter(Abs)')
         
-    with col1:
+    with col3:
         RAP = st.text_input('MDVP:RAP')
         
-    with col2:
+    with col4:
         PPQ = st.text_input('MDVP:PPQ')
         
-    with col3:
+    with col1:
         DDP = st.text_input('Jitter:DDP')
         
-    with col4:
+    with col2:
         Shimmer = st.text_input('MDVP:Shimmer')
         
-    with col5:
+    with col3:
         Shimmer_dB = st.text_input('MDVP:Shimmer(dB)')
         
-    with col1:
+    with col4:
         APQ3 = st.text_input('Shimmer:APQ3')
         
-    with col2:
+    with col1:
         APQ5 = st.text_input('Shimmer:APQ5')
         
-    with col3:
+    with col2:
         APQ = st.text_input('MDVP:APQ')
         
-    with col4:
-        DDA = st.text_input('Shimmer:DDA')
-        
-    with col5:
-        NHR = st.text_input('NHR')
-        
-    with col1:
-        HNR = st.text_input('HNR')
-        
-    with col2:
-        RPDE = st.text_input('RPDE')
-        
     with col3:
-        DFA = st.text_input('DFA')
-        
-    with col4:
         spread1 = st.text_input('spread1')
         
-    with col5:
+    with col4:
         spread2 = st.text_input('spread2')
-        
-    with col1:
-        D2 = st.text_input('D2')
-        
-    with col2:
-        PPE = st.text_input('PPE')
         
     
     
@@ -270,13 +246,15 @@ if (selected == "Parkinsons Prediction"):
     
     # creating a button for Prediction    
     if st.button("Parkinson's Test Result"):
-        parkinsons_prediction = model_parkinson .predict([[fo, fhi, flo, Jitter_percent, Jitter_Abs, RAP, PPQ,DDP,Shimmer,Shimmer_dB,APQ3,APQ5,APQ,DDA,NHR,HNR,RPDE,DFA,spread1,spread2,D2,PPE]])                          
+        parkinsons_prediction = model_parkinson.predict([[Jitter_percent, Jitter_Abs, RAP, PPQ,DDP,Shimmer,Shimmer_dB,APQ3,APQ5,APQ,spread1,spread2]])                          
         
-        if (parkinsons_prediction[0] == 0):
+        if (parkinsons_prediction[0] == 1):
           parkinsons_diagnosis = "The person has Parkinson's disease"
+          st.markdown(f'<p style="background-color:#0066cc;color:#db2742;font-size:24px;border-radius:2%;">{parkinsons_diagnosis}</p>', unsafe_allow_html=True)
         else:
           parkinsons_diagnosis = "The person does not have Parkinson's disease"
+          st.markdown(f'<p style="background-color:#0066cc;color:#33ff33;font-size:24px;border-radius:2%;">{parkinsons_diagnosis}</p>', unsafe_allow_html=True)
         
-    st.success(parkinsons_diagnosis)
+    
 
 
