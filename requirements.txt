@@ -1,9 +1,9 @@
 xgboost==3.0.2
 joblib==1.5.1
 scikit-learn==1.7.0
-train_test_split==0.23.1
-streamlit_option_menu 
+
+streamlit_option_menu==0.4.0
 seaborn==0.7.1
 numpy==1.22.4
 pandas==1.4.2
-streamlit==1.10.0
+streamlit==1.36
