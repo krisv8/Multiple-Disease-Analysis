@@ -1,9 +1,9 @@
 #Create a streamlit app to predict liver disease
 import streamlit as st
-import pandas as pd
+
 import joblib
 from streamlit_option_menu import option_menu
-import base64
+
 
 
 
