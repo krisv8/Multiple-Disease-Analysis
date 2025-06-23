@@ -8,9 +8,9 @@ import base64
 
 
 #Load the model
-model_liver = joblib.load('Multiple Disease\liver_disease_model.pkl')
-model_kidney = joblib.load('Multiple Disease\kidney_model.pkl')
-model_parkinson = joblib.load('Multiple Disease\parkinsons_model.pkl')
+model_liver = joblib.load('liver_disease_model.pkl')
+model_kidney = joblib.load('kidney_model.pkl')
+model_parkinson = joblib.load('parkinsons_model.pkl')
 
 #Header
 
