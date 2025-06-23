@@ -1,0 +1,8 @@
+xgboost
+joblib
+imblearn
+scikit-learn 
+train_test_split 
+streamlit_option_menu 
+seaborn 
+streamlit
