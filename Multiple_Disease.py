@@ -21,7 +21,7 @@ st.markdown(f'<h1 style="color:black;font-size:48px;"><marquee><I>{"Multiple Dis
 # sidebar for navigation
 with st.sidebar:
     
-    st.sidebar.image("Multiple Disease/Hospital.jpg",use_container_width=True)
+    st.sidebar.image("Hospital.jpg.jpeg",use_container_width=True)
 
     selected = option_menu('Multiple Disease Prediction System',
                           
