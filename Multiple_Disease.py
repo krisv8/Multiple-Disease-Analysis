@@ -347,7 +347,7 @@ if (selected == "Diabetic Prediction"):
         DPF = st.number_input('DiabetesPedigreeFunction')
         
     with col4:
-        Pregnancies = st.number_input('Pregnancies',min_value=0,max_value=20,value=2,step=1)
+        Pregnancies = st.number_input('Pregnancies',min_value=0,max_value=20,value=2,step=1,help="Men mark it Zero else mark relevant")
         
     # code for Prediction
     diabetic_diagnosis = ''
