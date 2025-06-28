@@ -4,13 +4,12 @@ import streamlit as st
 import joblib
 from streamlit_option_menu import option_menu
 
-
-
-
 #Load the model
 model_liver = joblib.load('liver_disease_model.pkl')
 model_kidney = joblib.load('kidney_model.pkl')
 model_parkinson = joblib.load('parkinsons_model.pkl')
+model_Heart= joblib.load('heart_disease_model.pkl')
+model_diabetic = joblib.load('diabetic_disease_model.pkl')
 
 #Header
 
@@ -21,20 +20,23 @@ st.markdown(f'<h1 style="color:black;font-size:48px;"><marquee><I>{"Multiple Dis
 # sidebar for navigation
 with st.sidebar:
     
-    st.sidebar.image("Hospital.jpg.jpeg",use_container_width=True)
+    # st.sidebar.image("Multiple-Disease-Analysis-main/Hospital.jpg",use_container_width=True)
 
     selected = option_menu('Multiple Disease Prediction System',
                           
-                          ['Kidney Prediction',
+                          ['Kidney Disease Prediction',
                            'Liver Disease Prediction',
-                           'Parkinsons Prediction'],
-                          icons=['hospital','activity','person'],
+                           'Parkinsons Prediction',
+                           'Heart Disease Prediction',
+                           'Diabetic Prediction'
+                           ],
+                          icons=['hospital','activity','person','heart','app'],
                           default_index=0)
-                    
-if (selected == 'Kidney Prediction'):
+ # Kidney Disease Prediction Page                   
+if (selected == 'Kidney Disease Prediction'):
   
     # page title
-    st.title('Kidney Prediction')
+    st.title('Kidney Disease Prediction')
     st.subheader('Prediction accuracy is expected to be 96%')
     page_element="""
     <style>
@@ -52,13 +54,13 @@ if (selected == 'Kidney Prediction'):
     col1, col2, col3 = st.columns(3)
     
     with col1:
-        age = st.text_input('Age of the Person',value='10')
+        age = st.number_input('Age',min_value=15,max_value=90,value=50,step=1)
     with col2:
-        blood_pressure = st.text_input('Blood Pressure value',value='80')
+        blood_pressure = st.number_input('Blood Pressure value',value=80)
     with col3:
-        specific_gravity = st.text_input('Specific Gravity value',value='1')
+        specific_gravity = st.number_input('Specific Gravity value',value=1)
     with col1:
-        sugar = st.text_input('Sugar value',value='0')
+        sugar = st.number_input('Sugar value',value=0)
     with col2:
         red_blood_cells = st.selectbox('Red Blood Cells', ('normal', 'abnormal'))
     with col3:
@@ -66,15 +68,15 @@ if (selected == 'Kidney Prediction'):
     with col1:
         bacteria = st.selectbox('Bacteria', ('notpresent', 'present'))
     with col2:
-        sodium = st.text_input('Sodium value',value='0')
+        sodium = st.number_input('Sodium value',value=0)
     with col3:
-        potassium = st.text_input('Potassium value',value='0')
+        potassium = st.number_input('Potassium value',value=0)
     with col1:
-        haemoglobin = st.text_input('Haemoglobin value',value='0')
+        haemoglobin = st.number_input('Haemoglobin value',value=0)
     with col2:
-        packedVol = st.text_input('Packed cell volume',value='0')
+        packedVol = st.number_input('Packed cell volume',value=0)
     with col3:
-        RBCcount = st.text_input('RBC Count',value='0')
+        RBCcount = st.number_input('RBC Count',value=0)
     
 
     #convert categorical inputs to numerical values
@@ -83,18 +85,18 @@ if (selected == 'Kidney Prediction'):
     pus_cell = 1 if pus_cell.lower() == 'normal' else 0
     bacteria = 1 if bacteria.lower() == 'notpresent' else 0      
 
-    # convert other inputs to float
-    age= age.replace(' ', '')
-    blood_pressure = blood_pressure.replace(' ', '')
-    age = float(age)
-    blood_pressure = float(blood_pressure)
-    specific_gravity = float(specific_gravity)
-    sugar = float(sugar)
-    sodium = float(sodium)
-    potassium = float(potassium)
-    haemoglobin = float(haemoglobin)
-    packedVol = float(packedVol)
-    RBCcount = float(RBCcount)
+    # # convert other inputs to float
+    # age= age.replace(' ', '')
+    # blood_pressure = blood_pressure.replace(' ', '')
+    # age = float(age)
+    # blood_pressure = float(blood_pressure)
+    # specific_gravity = float(specific_gravity)
+    # sugar = float(sugar)
+    # sodium = float(sodium)
+    # potassium = float(potassium)
+    # haemoglobin = float(haemoglobin)
+    # packedVol = float(packedVol)
+    # RBCcount = float(RBCcount)
 
 
 
@@ -112,12 +114,6 @@ if (selected == 'Kidney Prediction'):
             kidney_diagnosis = 'The person does not have any kidney disease'
             
             st.markdown(f'<p style="background-color:#0066cc;color:#33ff33;font-size:24px;border-radius:2%;">{kidney_diagnosis}</p>', unsafe_allow_html=True)
-
-    
-    
-
-
-
 
 # Liver Disease Prediction Page
 if (selected == 'Liver Disease Prediction'):
@@ -139,7 +135,7 @@ if (selected == 'Liver Disease Prediction'):
     col1, col2, col3 = st.columns(3)
     
     with col1:
-        age = st.number_input('Age')
+        age = st.number_input('Age',min_value=15,max_value=85,value=50,step=1)
     with col2:
         Genders = st.selectbox(options=["Male","Female"],label='Gender')  
     with col3:
@@ -178,11 +174,6 @@ if (selected == 'Liver Disease Prediction'):
         else:
           liver_diagnosis = 'The person does not have any liver disease'
           st.markdown(f'<p style="background-color:#0066cc;color:#33ff33;font-size:24px;border-radius:2%;">{liver_diagnosis}</p>', unsafe_allow_html=True)
-        
-    
-        
-    
-    
 
 # Parkinson's Prediction Page
 if (selected == "Parkinsons Prediction"):
@@ -204,40 +195,40 @@ if (selected == "Parkinsons Prediction"):
     col1, col2, col3, col4 = st.columns(4)  
     
     with col1:
-        Jitter_percent = st.text_input('MDVP:Jitter(%)')
+        Jitter_percent = st.number_input('MDVP:Jitter(%)')
         
     with col2:
-        Jitter_Abs = st.text_input('MDVP:Jitter(Abs)')
+        Jitter_Abs = st.number_input('MDVP:Jitter(Abs)')
         
     with col3:
-        RAP = st.text_input('MDVP:RAP')
+        RAP = st.number_input('MDVP:RAP')
         
     with col4:
-        PPQ = st.text_input('MDVP:PPQ')
+        PPQ = st.number_input('MDVP:PPQ')
         
     with col1:
-        DDP = st.text_input('Jitter:DDP')
+        DDP = st.number_input('Jitter:DDP')
         
     with col2:
-        Shimmer = st.text_input('MDVP:Shimmer')
+        Shimmer = st.number_input('MDVP:Shimmer')
         
     with col3:
-        Shimmer_dB = st.text_input('MDVP:Shimmer(dB)')
+        Shimmer_dB = st.number_input('MDVP:Shimmer(dB)')
         
     with col4:
-        APQ3 = st.text_input('Shimmer:APQ3')
+        APQ3 = st.number_input('Shimmer:APQ3')
         
     with col1:
-        APQ5 = st.text_input('Shimmer:APQ5')
+        APQ5 = st.number_input('Shimmer:APQ5')
         
     with col2:
-        APQ = st.text_input('MDVP:APQ')
+        APQ = st.number_input('MDVP:APQ')
         
     with col3:
-        spread1 = st.text_input('spread1')
+        spread1 = st.number_input('spread1')
         
     with col4:
-        spread2 = st.text_input('spread2')
+        spread2 = st.number_input('spread2')
         
     
     
@@ -254,7 +245,123 @@ if (selected == "Parkinsons Prediction"):
         else:
           parkinsons_diagnosis = "The person does not have Parkinson's disease"
           st.markdown(f'<p style="background-color:#0066cc;color:#33ff33;font-size:24px;border-radius:2%;">{parkinsons_diagnosis}</p>', unsafe_allow_html=True)
-        
+
+# Heart Prediction Page
+if (selected == "Heart Disease Prediction"):
     
+    # page title
+    st.title("Heart Disease Prediction")
+    st.subheader('Prediction accuracy is expected to be 96%')
+    page_element="""
+    <style>
+    [data-testid="stAppViewContainer"]{
+    background-image: url("https://media.istockphoto.com/id/2158344581/vector/white-plus-sign-representing-medical-care-and-support-on-world-health-day-against-a.jpg?s=612x612&w=0&k=20&c=NNkSsnRSv6Oxq5w_2o7NgvI4aDExhi8WFndCoyjhIuo=");
+    background-size: cover;
+    }
+    </style>
+    """
+
+    st.markdown(page_element, unsafe_allow_html=True)
+    
+    col1, col2, col3 = st.columns(3)  
+    #'age','sex','cp','chol','fbs','thalach','slope'
+    with col1:
+        age = st.number_input('Age',min_value=20,max_value=85,value=50,step=1)
+        
+        
+    with col2:
+        Gender = st.selectbox(options=["Male","Female"],label='Gender') 
+        
+    with col3:
+        cp = float(st.radio("Constrictive pericarditis",[1,2,3,4],horizontal=1))
+        
+    with col1:
+        chol = st.number_input('Cholestrol',min_value=100,max_value=600,value=180,step=1)
+    
+    with col2:
+        trestbps = st.number_input('Resting BP',min_value=40,max_value=200,value=100,step=1)
+        
+    with col3:
+        fbs = float(st.radio("Fasting blood Sugar",[0,1],horizontal=1))
+        
+    with col1:
+        thalach = st.number_input('Thalach',min_value=70,max_value=200,value=140,step=1)
+        
+    with col2:
+        slope = float(st.radio("Slope",[0,1,2],horizontal=1))
+        
+    Gender = 1 if Gender == "Male" else 0
+    
+    # code for Prediction
+    heart_diagnosis = ''
+    
+    # creating a button for Prediction    
+    if st.button("Heart Test Result"):
+        heart_prediction = model_Heart.predict([[age, Gender, cp,trestbps, chol,fbs,thalach,slope]])                          
+        
+        if (heart_prediction[0] == 1):
+          heart_diagnosis = "The person has Heart disease"
+          st.markdown(f'<p style="background-color:#0066cc;color:#db2742;font-size:24px;border-radius:2%;">{heart_diagnosis}</p>', unsafe_allow_html=True)
+        else:
+          heart_diagnosis = "The person does not have Heart disease"
+          st.markdown(f'<p style="background-color:#0066cc;color:#33ff33;font-size:24px;border-radius:2%;">{heart_diagnosis}</p>', unsafe_allow_html=True)
+
+# Diabetic Prediction Page
+if (selected == "Diabetic Prediction"):
+    
+    # page title
+    st.title("Diabetic Prediction")
+    st.subheader('Prediction accuracy is expected to be 80%')
+    page_element="""
+    <style>
+    [data-testid="stAppViewContainer"]{
+    background-image: url("https://png.pngtree.com/thumb_back/fw800/background/20190221/ourmid/pngtree-world-diabetes-day-diabetes-medical-health-image_18558.jpg");
+    background-size: cover;
+    }
+    </style>
+    """
+
+    st.markdown(page_element, unsafe_allow_html=True)
+    
+    col1, col2, col3, col4 = st.columns(4)  
+    
+    with col1:
+        Age = st.number_input('Age',min_value=20,max_value=85,value=50,step=1)
+        
+    with col2:
+        Glucose = st.number_input('Glucose',min_value=0,max_value=200,value=90,step=1)
+        
+    with col3:
+        BP = st.number_input('BloodPressure',min_value=0,max_value=200,value=80,step=1)
+        
+    with col4:
+        SkinThickness = st.number_input('SkinThickness',min_value=0,max_value=100,value=45,step=1)
+        
+    with col1:
+        Insulin = st.number_input('Insulin',min_value=0,max_value=1000,value=160,step=1)
+        
+    with col2:
+        BMI = st.number_input('BMI')
+        
+    with col3:
+        DPF = st.number_input('DiabetesPedigreeFunction')
+        
+    with col4:
+        Pregnancies = st.number_input('Pregnancies',min_value=0,max_value=20,value=2,step=1)
+        
+    # code for Prediction
+    diabetic_diagnosis = ''
+    
+    # creating a button for Prediction    
+    if st.button("Diabetic Test Result"):
+        Diabetic_prediction = model_diabetic.predict([[Pregnancies,Glucose,BP,SkinThickness,Insulin,BMI,DPF,Age]])                          
+        
+        if (Diabetic_prediction[0] == 1):
+          diabetic_diagnosis = "The person is Diabetic"
+          st.markdown(f'<p style="background-color:#0066cc;color:#db2742;font-size:24px;border-radius:2%;">{diabetic_diagnosis}</p>', unsafe_allow_html=True)
+        else:
+          diabetic_diagnosis = "The person is not Diabetic"
+          st.markdown(f'<p style="background-color:#0066cc;color:#33ff33;font-size:24px;border-radius:2%;">{diabetic_diagnosis}</p>', unsafe_allow_html=True)
+        
 
 
